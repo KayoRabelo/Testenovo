@@ -250,10 +250,10 @@
 
   var score = 0;
 
-  // Verificar se está sendo executado em um dispositivo móvel
+
   var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  // Adicionar eventos de toque se estiver em um dispositivo móvel
+ 
   if (isMobile) {
     canvas.addEventListener("touchstart", handleTouchStart);
     canvas.addEventListener("touchmove", handleTouchMove);
@@ -281,7 +281,7 @@
     }
   }
 
-  function handleTouchStart(event) {
+  canvas.addEventListener("touchstart"), function(event) {
     var touchX = event.touches[0].clientX;
     if (touchX < canvasWidth / 2) {
       player.leftPressed = true;
@@ -290,7 +290,7 @@
     }
   }
 
-  function handleTouchMove(event) {
+  canvas.addEventListener("touchmove"), function(event) {
     event.preventDefault();
     var touchX = event.touches[0].clientX;
     if (touchX < canvasWidth / 2) {
@@ -302,7 +302,7 @@
     }
   }
 
-  function handleTouchEnd(event) {
+  canvas.addEventListener("touchend"), function(event) {
     player.leftPressed = false;
     player.rightPressed = false;
   }
@@ -447,9 +447,7 @@
     };
   };
 
-  function gameOver() {
-    // Implemente a lógica do game over
-  }
+ 
 </script>
 
 
