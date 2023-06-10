@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Portfólio - Star Wars Edition</title>
+  <style>
+   
+   body {
+    background-color: #000;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  #gameCanvas {
+    position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      font-family: 'Roboto', Arial, sans-serif;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  }
+
+   
+   
+   
+   
+   
+   body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #000;
+    }
+    #canvas {
+      position: fixed;
+      z-index: -1;
+    }
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      font-family: 'Roboto', Arial, sans-serif;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    .container {
+      max-width: 800px;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      letter-spacing: 3px;
+    }
+    p {
+      font-size: 24px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .card {
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .card-description {
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .overlay {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      font-family: 'Roboto', Arial, sans-serif;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .card-title {
+      margin-left: 10px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #fff;
+      position: absolute;
+      left: -15px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card-link:hover .dot {
+      opacity: 1;
+    }
+
+    .left-dot {
+      right: -15px;
+      left: unset;
+    }
+    
+  </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <img id="playerImage" src="pngwing.com.png" style="display: none;">
+    <img id="enemyImage" src="pngwing.com (1).png" style="display: none;">
+    
+    
+  <canvas id="canvas"></canvas>
+
+</head>
+<body>
+  <div class="overlay">
+    <div class="container">
+      <a href="https://github.com/KayoRabelo?tab=repositories" class="card-link">
+        <div class="dot"></div>
+        <h2 class="card-title" style="color: #fff;">PROJETOS</h2>
+        <p class="card-description" style="color: #fff;"></p>
+      </a>
+      <a href="https://api.whatsapp.com/send?phone=5571992006060"class="card-link">
+        <div class="dot"></div>
+        <h2 class="card-title" style="color: #fff;">CONTATO</h2>
+        <p class="card-description" style="color: #fff;"></p>
+      </a>
+      <a href="https://github.com/KayoRabelo?tab=repositories" class="card-link">
+        <div class="dot"></div>
+        <h2 class="card-title" style="color: #fff;">SOBRE</h2>
+        <p class="card-description" style="color: #fff;"></p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+  <script>
+    // Configuração básica
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Adiciona o canvas ao DOM
+    document.body.appendChild(renderer.domElement);
+
+    // Cria um gerador de partículas
+    var particleCount = 3000;
+    var particles = new THREE.Geometry();
+    var particleMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 2 });
+
+    // Cria as partículas
+    for (var i = 0; i < particleCount; i++) {
+      var x = Math.random() * 2000 - 1000;
+      var y = Math.random() * 2000 - 1000;
+      var z = Math.random() * 2000 - 1000;
+
+      var particle = new THREE.Vector3(x, y, z);
+      particles.vertices.push(particle);
+    }
+
+    // Cria o sistema de partículas
+    var particleSystem = new THREE.Points(particles, particleMaterial);
+
+    // Adiciona o sistema de partículas à cena
+    scene.add(particleSystem);
+
+    // Posiciona a câmera
+    camera.position.z = 5;
+
+    // Função de animação
+    function animate() {
+      requestAnimationFrame(animate);
+      particleSystem.rotation.x += 0.001;
+      particleSystem.rotation.y += 0.001;
+      renderer.render(scene, camera);
+    }
+
+    // Inicia a animação
+    animate();
+  </script>
+
+<script>
+  var canvas = document.getElementById("gameCanvas");
+  var context = canvas.getContext("2d");
+
+  var canvasWidth = canvas.width;
+  var canvasHeight = canvas.height;
+
+  var player = {
+    x: canvasWidth / 2,
+    y: canvasHeight - 50,
+    width: 50,
+    height: 50,
+    speed: 5,
+    leftPressed: false,
+    rightPressed: false
+  };
+
+  var bullets = [];
+  var bulletSpeed = 10;
+
+  var enemies = [];
+  var enemySpeed = 2;
+  var enemySpawnInterval = 1000;
+  var lastSpawnTime = -enemySpawnInterval;
+
+  var score = 0;
+
+  // Verificar se está sendo executado em um dispositivo móvel
+  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  // Adicionar eventos de toque se estiver em um dispositivo móvel
+  if (isMobile) {
+    canvas.addEventListener("touchstart", handleTouchStart);
+    canvas.addEventListener("touchmove", handleTouchMove);
+    canvas.addEventListener("touchend", handleTouchEnd);
+  } else {
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "ArrowLeft") {
+      player.leftPressed = true;
+    } else if (event.key === "ArrowRight") {
+      player.rightPressed = true;
+    } else if (event.key === " ") {
+      fireBullet();
+    }
+  }
+
+  function handleKeyUp(event) {
+    if (event.key === "ArrowLeft") {
+      player.leftPressed = false;
+    } else if (event.key === "ArrowRight") {
+      player.rightPressed = false;
+    }
+  }
+
+  function handleTouchStart(event) {
+    var touchX = event.touches[0].clientX;
+    if (touchX < canvasWidth / 2) {
+      player.leftPressed = true;
+    } else {
+      player.rightPressed = true;
+    }
+  }
+
+  function handleTouchMove(event) {
+    event.preventDefault();
+    var touchX = event.touches[0].clientX;
+    if (touchX < canvasWidth / 2) {
+      player.leftPressed = true;
+      player.rightPressed = false;
+    } else {
+      player.leftPressed = false;
+      player.rightPressed = true;
+    }
+  }
+
+  function handleTouchEnd(event) {
+    player.leftPressed = false;
+    player.rightPressed = false;
+  }
+
+  function updateGame() {
+    updatePlayer();
+    updateBullets();
+    updateEnemies();
+    checkCollisions();
+    drawGame();
+
+    requestAnimationFrame(updateGame);
+  }
+
+  function updatePlayer() {
+    if (player.leftPressed && player.x > 0) {
+      player.x -= player.speed;
+    }
+
+    if (player.rightPressed && player.x < canvasWidth - player.width) {
+      player.x += player.speed;
+    }
+  }
+
+  function updateBullets() {
+    for (var i = 0; i < bullets.length; i++) {
+      bullets[i].y -= bulletSpeed;
+
+      if (bullets[i].y < 0) {
+        bullets.splice(i, 1);
+        i--;
+      }
+    }
+  }
+
+  function updateEnemies() {
+    var currentTime = Date.now();
+
+    if (currentTime - lastSpawnTime > enemySpawnInterval) {
+      var enemy = {
+        x: Math.random() * (canvasWidth - 50),
+        y: 0,
+        width: 50,
+        height: 50
+      };
+
+      enemies.push(enemy);
+      lastSpawnTime = currentTime;
+    }
+
+    for (var i = 0; i < enemies.length; i++) {
+      enemies[i].y += enemySpeed;
+
+      if (enemies[i].y > canvasHeight) {
+        enemies.splice(i, 1);
+        i--;
+      }
+    }
+  }
+
+  function checkCollisions() {
+    var bulletsToRemove = [];
+    var enemiesToRemove = [];
+
+    for (var i = 0; i < bullets.length; i++) {
+      var bullet = bullets[i];
+
+      for (var j = 0; j < enemies.length; j++) {
+        var enemy = enemies[j];
+
+        if (
+          bullet.x < enemy.x + enemy.width &&
+          bullet.x + bullet.width > enemy.x &&
+          bullet.y < enemy.y + enemy.height &&
+          bullet.y + bullet.height > enemy.y
+        ) {
+          bulletsToRemove.push(i);
+          enemiesToRemove.push(j);
+          score++;
+        }
+      }
+    }
+
+    for (var i = bulletsToRemove.length - 1; i >= 0; i--) {
+      bullets.splice(bulletsToRemove[i], 1);
+    }
+
+    for (var i = enemiesToRemove.length - 1; i >= 0; i--) {
+      enemies.splice(enemiesToRemove[i], 1);
+    }
+
+    for (var i = 0; i < enemies.length; i++) {
+      var enemy = enemies[i];
+
+      if (
+        player.x < enemy.x + enemy.width &&
+        player.x + player.width > enemy.x &&
+        player.y < enemy.y + enemy.height &&
+        player.y + player.height > enemy.y
+      ) {
+        gameOver();
+      }
+    }
+  }
+
+  function drawGame() {
+    context.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    context.drawImage(playerImage, player.x, player.y, player.width, player.height);
+
+    for (var i = 0; i < bullets.length; i++) {
+      context.fillRect(bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height);
+    }
+
+    for (var i = 0; i < enemies.length; i++) {
+      context.drawImage(enemyImage, enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height);
+    }
+
+    context.fillStyle = "#fff";
+    context.font = "24px Arial";
+    context.fillText("Score: " + score, 10, 30);
+  }
+
+  function fireBullet() {
+    var bullet = {
+      x: player.x + player.width / 2 - 2.5,
+      y: player.y,
+      width: 5,
+      height: 20
+    };
+
+    bullets.push(bullet);
+  }
+
+  var playerImage = new Image();
+  playerImage.src = "pngwing.com.png";
+  playerImage.onload = function() {
+    var enemyImage = new Image();
+    enemyImage.src = "pngwing.com (1).png";
+    enemyImage.onload = function() {
+      updateGame();
+    };
+  };
+
+  function gameOver() {
+    // Implemente a lógica do game over
+  }
+</script>
+
+
+</body>
+</html>
